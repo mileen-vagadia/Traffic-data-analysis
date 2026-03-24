@@ -14,8 +14,7 @@ dataset: [Smart Traffic Management Dataset](https://www.kaggle.com/datasets/smmm
 traffic-eda/
 ├── data/
 │   └── raw/               # put the kaggle csv here
-├── notebooks/
-│   └── eda_logic.py       # main analysis
+├── eda_logic.py       # main analysis
 ├── sql/
 │   ├── schema.sql
 │   └── queries.sql
