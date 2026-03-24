@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# db config — values come from .env
 DB_USER     = os.getenv("DB_USER", "postgres")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
 DB_HOST     = os.getenv("DB_HOST", "localhost")
@@ -15,17 +14,20 @@ DB_NAME     = os.getenv("DB_NAME", "traffic_db")
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 CSV_PATH = "data/raw/traffic_data.csv"
 
-# kaggle dataset has PascalCase columns, mapping them to snake_case for postgres
+# mapping csv columns to postgres column names
 COLUMN_MAP = {
-    "Intersection_ID"  : "intersection_id",
-    "Timestamp"        : "timestamp",
-    "Vehicle_Count"    : "vehicle_count",
-    "Vehicle_Type"     : "vehicle_type",
-    "Direction"        : "direction",
-    "Signal_Phase"     : "signal_phase",
-    "Green_Duration"   : "green_duration_sec",
-    "Wait_Time"        : "wait_time_sec",
-    "Congestion_Level" : "congestion_level",
+    "timestamp"            : "timestamp",
+    "location_id"          : "intersection_id",
+    "traffic_volume"       : "traffic_volume",
+    "avg_vehicle_speed"    : "avg_speed",
+    "vehicle_count_cars"   : "count_cars",
+    "vehicle_count_trucks" : "count_trucks",
+    "vehicle_count_bikes"  : "count_bikes",
+    "weather_condition"    : "weather_condition",
+    "temperature"          : "temperature",
+    "humidity"             : "humidity",
+    "accident_reported"    : "accident_reported",
+    "signal_status"        : "signal_phase",
 }
 
 
@@ -39,7 +41,6 @@ def load_csv(path):
 def clean(df):
     df = df.rename(columns=COLUMN_MAP)
 
-    # keep only columns we care about
     cols = [c for c in COLUMN_MAP.values() if c in df.columns]
     df = df[cols]
 
@@ -47,13 +48,12 @@ def clean(df):
         df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
 
     before = len(df)
-    df = df.dropna(subset=["timestamp", "vehicle_count"])
+    df = df.dropna(subset=["timestamp", "traffic_volume"])
     dropped = before - len(df)
     if dropped:
-        print(f"dropped {dropped} rows with null timestamp or vehicle_count")
+        print(f"dropped {dropped} rows with nulls")
 
-    # lowercase strings so they're consistent in postgres
-    for col in ["vehicle_type", "direction", "signal_phase", "congestion_level"]:
+    for col in ["weather_condition", "signal_phase"]:
         if col in df.columns:
             df[col] = df[col].str.strip().str.lower()
 
