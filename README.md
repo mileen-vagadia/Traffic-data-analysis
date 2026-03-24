@@ -1,6 +1,5 @@
-# traffic-eda
 
-EDA on urban traffic data using Python and PostgreSQL.
+urban traffic data analysis using Python and PostgreSQL.
 
 I work on traffic control systems at my job so wanted to see how the data side of things looks — specifically around peak hours and whether signal timing actually affects wait times.
 
@@ -11,7 +10,7 @@ dataset: [Smart Traffic Management Dataset](https://www.kaggle.com/datasets/smmm
 ### what's in here
 
 ```
-traffic-data-EDA-analysis/
+traffic-data-analysis/
 ├── data/
 │   └── raw/               # put the kaggle csv here
 ├── eda_logic.py       # main analysis
@@ -30,8 +29,8 @@ traffic-data-EDA-analysis/
 
 ```bash
 # 1. clone and install
-git clone https://github.com/mileen-vagadia/Traffic-data-EDA-analysis
-cd Traffic-data-EDA-analysis
+git clone https://github.com/mileen-vagadia/Traffic-data-analysis
+cd Traffic-data-analysis
 pip install -r requirements.txt
 
 # 2. set up env
