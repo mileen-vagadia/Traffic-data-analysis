@@ -15,7 +15,7 @@ traffic-eda/
 ├── data/
 │   └── raw/               # put the kaggle csv here
 ├── notebooks/
-│   └── 01_eda.ipynb       # main analysis
+│   └── eda_logic.py       # main analysis
 ├── sql/
 │   ├── schema.sql
 │   └── queries.sql
@@ -47,8 +47,8 @@ psql -U postgres -d traffic_db -f sql/schema.sql
 # then load it
 python load_data.py
 
-# 5. open the notebook
-jupyter notebook notebooks/01_eda.ipynb
+# 5. run py file
+eda_logic.py
 ```
 
 ---
